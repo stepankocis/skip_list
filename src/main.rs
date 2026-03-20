@@ -1,8 +1,17 @@
 use rand::prelude::*;
 fn main() {
     let original = vec![1,2,5,6,7,12,13];
-    let mut rng = rand::rng();
+
+    let levels = construct(original);
+    let number_being_found = 7;
+    let where_it_is = finding(number_being_found, &levels);
+    println!("{} je na indexu {}", number_being_found, where_it_is);
+
+}
+
+fn construct(original: Vec<i32>) -> Vec<Vec<(i32, i32)>> {
     let mut levels: Vec<Vec<(i32, i32)>> = vec![vec![];8];
+    let mut rng = rand::rng();
 
     for i in 0..original.len() {
         levels[0].push((original[i] as i32, i as i32));
@@ -12,10 +21,7 @@ fn main() {
             levels[j].push((original[i] as i32, prev_i as i32));
         }
     }
-    let number_being_found = 7;
-    let where_it_is = finding(number_being_found, &levels);
-    println!("{} je na indexu {}", number_being_found, where_it_is);
-
+    return levels;
 }
 
 fn finding(number_being_found: i32, levels: &Vec<Vec<(i32, i32)>>) -> i32 {
